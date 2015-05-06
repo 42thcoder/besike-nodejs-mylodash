@@ -1,13 +1,11 @@
-module.exports = _;
-
 var _ = {};
-
 
 _.once = function(fn){
   var invoked = false;
+  var result;
   
   return function(){
-    var result = invoked ? result : fn();
+    result = invoked ? result : fn();
     invoked = true;
     
     return result;
@@ -18,13 +16,7 @@ _.memoize = function(fn, keyFn){
   var results = {};
   
   return function(param){
-    var cacheKey;
-    
-    if(typeof keyFn === 'undefined') {
-      cacheKey = fn.name + param.toString();
-    } else {
-      cacheKey = keyFn(param);
-    }
+    var cacheKey = (typeof keyFn === 'function') ? keyFn(param) : (fn.name + param.toString()) ;
   
     if(! results.hasOwnProperty(cacheKey)){
       results[cacheKey] = fn(param);
@@ -32,8 +24,7 @@ _.memoize = function(fn, keyFn){
     
     return results[cacheKey];
   };
-  
-  };
+};
 
 _.bind = function (fn, context) {
   return function(){
@@ -41,5 +32,4 @@ _.bind = function (fn, context) {
   };
 };
 
-
-
+module.exports = _;
