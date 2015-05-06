@@ -12,5 +12,26 @@ _.once = function(fn){
   };
 };
 
+_.memoize = function(fn, keyFn){
+  var results = {};
+  
+  return function(param){
+    var cacheKey;
+      if(typeof keyFn === 'undefined') {
+        cacheKey = fn.name + param.toString();
+      } else {
+        cacheKey = keyFn(param);
+      }
+    
+      if(! results.hasOwnProperty(cacheKey)){
+        results[cacheKey] = fn(param);
+      } 
+      
+      return results[cacheKey];
+    };
+  
+  };
+
 
 module.exports = _;
+
