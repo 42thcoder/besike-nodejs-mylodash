@@ -32,6 +32,11 @@ _.memoize = function(fn, keyFn){
   
   };
 
+_.bind = function (fn, context) {
+  return function(){
+    return fn.apply(context);
+  };
+};
 
 module.exports = _;
 
