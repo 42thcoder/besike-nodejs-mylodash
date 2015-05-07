@@ -16,7 +16,7 @@ _.memoize = function(fn, keyFn){
   var results = {};
   
   return function(param){
-    var cacheKey = (typeof keyFn === 'function') ? keyFn(param) : (fn.name + param.toString()) ;
+    var cacheKey = (typeof keyFn === 'function') ? keyFn(param) : param.toString();
   
     if(! results.hasOwnProperty(cacheKey)){
       results[cacheKey] = fn(param);
